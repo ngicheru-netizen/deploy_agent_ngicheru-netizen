@@ -1,5 +1,9 @@
 # Readme
 
+# Run Through Video
+
+Run through video in comments section on summative submission on Canvas.
+
 ### How to Run the Script
 
 First, make sure the script has execute permissions:
