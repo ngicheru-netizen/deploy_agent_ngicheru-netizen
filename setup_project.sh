@@ -1,8 +1,9 @@
 #!/bin/bash
-#This is a  shell script that automates the creation of the workspace, configures settings via the command line, and handles system signals gracefully.
+#This is a  shell script that automates the creation of the workspace, 
+#configures settings via the command line, and handles system signals gracefully.
 
 
-#Global Function
+#Global Functions
 parent_dir=""
 input=""
 
@@ -31,13 +32,36 @@ echo "Beginning cleanup process... "
     exit 130
     }
 
+
+
 # Prompt the user for the project name
 directory_structure(){
 read -rp "Please enter your directory name " input
 parent_dir="attendance_tracker_$input"
+
+#Check if directory already exists before continuing
+if [ -d "$parent_dir" ]; then
+    echo "Directory already exists. Please choose a different name."
+    exit 1
+fi
+
+echo "Checking permissions..."
+sleep 1
+
+#Check if user has correct permissions to create directories and subdirectories
+
+if [ ! -w "." ]; then
+    echo "Warning! You don't have sufficient permissions in this current directory."
+    echo "Current directory: $(pwd)"
+    echo "Please run script in directory where you have appropriate permissions."
+    sleep 1
+    echo "Exiting now..."
+    exit 1
+fi
+
+echo "Permissions are sufficient. Continuing setup..."
+sleep 1
 #Create directory with user input
-
-
 if mkdir -p "$parent_dir"; then
     echo "Parent directory created"
     sleep 2
@@ -315,3 +339,4 @@ directory_structure
 create_files
 verify_folder_structure
 update_config
+echo "Setup Complete!"
